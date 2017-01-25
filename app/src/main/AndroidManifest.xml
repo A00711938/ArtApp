@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".WelcomeScreenActivity"></activity>
+        <activity android:name=".ArtDetailsActivity"></activity>
     </application>
 
 </manifest>
