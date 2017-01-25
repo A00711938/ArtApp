@@ -51,7 +51,7 @@
         android:layout_alignStart="@+id/textView" />
 
     <TextView
-        android:text="< 0.5 Kilometers"
+        android:text=" 0.5 Kilometers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageButton4"
@@ -62,7 +62,7 @@
         android:id="@+id/textView2" />
 
     <TextView
-        android:text="< 1.0 Kilometers"
+        android:text=" 1.0 Kilometers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageButton2"
@@ -71,7 +71,7 @@
         android:id="@+id/textView4" />
 
     <TextView
-        android:text="< 0.8 Kilometers"
+        android:text=" 0.8 Kilometers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
