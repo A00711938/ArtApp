@@ -15,9 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NearestArtActivity"></activity>
-        <activity android:name=".WelcomeScreenActivity"></activity>
-        <activity android:name=".ArtDetailsActivity"></activity>
+        <activity android:name=".NearestArtActivity" />
+        <activity android:name=".WelcomeScreenActivity" />
+        <activity android:name=".ArtDetailsActivity" />
+        <activity android:name=".CollectionPageActivity"></activity>
     </application>
 
 </manifest>

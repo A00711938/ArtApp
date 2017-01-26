@@ -21,6 +21,7 @@ public class WelcomeScreenActivity extends AppCompatActivity {
     }
 
     public void goToMyCollection(View view){
-
+        Intent i = new Intent(this, CollectionPageActivity.class);
+        startActivity(i);
     }
 }
