@@ -18,7 +18,8 @@
         android:id="@+id/nearestArtButton"
         android:elevation="23dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="goToNearestArt"/>
 
     <Button
         android:text="MY COLLECTION"
@@ -27,6 +28,7 @@
         android:id="@+id/myCollectionButton"
         android:layout_marginTop="117dp"
         android:layout_below="@+id/nearestArtButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="goToMyCollection"/>
 
 </RelativeLayout>
