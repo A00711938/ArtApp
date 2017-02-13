@@ -11,6 +11,7 @@ import static a3t.groupartapp.comp3717.artapp.R.id.comment;
 
 public class Art {
     private String name;
+    private String address;
     private List<String> images;
     private int rate;
     private List<String> comments;
@@ -34,6 +35,15 @@ public class Art {
     }
     public void addComment(String comment) {
         comments.add(comment);
+
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address= address;
 
     }
 

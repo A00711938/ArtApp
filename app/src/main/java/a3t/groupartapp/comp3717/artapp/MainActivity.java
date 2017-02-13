@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         if (arts != null) {
             for (Art art : arts) {
                 Log.d("Art name:", art.getName());
+                Log.d("Art address: ", art.getAddress());
                 Log.d("Art rate:", Integer.toString(art.getRate()));
                 for (String image: art.getImages()) {
                     Log.d("Art image:", image);

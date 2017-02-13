@@ -30,6 +30,8 @@ public class DataHelper {
                 Scanner scanner = new Scanner(line).useDelimiter("\\|");
                 String name = scanner.next();
                 Art newArt = new Art(name);
+                String address = scanner.next();
+                newArt.setAddress(address);
                 newArt.rate(scanner.nextInt());
                 while (scanner.hasNext()) {
                     String temp;
