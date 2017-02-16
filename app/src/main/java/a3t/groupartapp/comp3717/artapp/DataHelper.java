@@ -36,6 +36,7 @@ public class DataHelper {
                 while (scanner.hasNext()) {
                     String temp;
                     if ((temp = scanner.next()).contains("jpg")) {
+                        temp = temp.substring(0,temp.indexOf("."));
                         newArt.addImage(temp);
                     } else {
                         newArt.addComment(temp);
