@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * This class reads a file (tokenized with the | delimiter) and
+ * places the information in an Art object. DataHelper creates and List
+ * Array of art objects from the file.
+ *
  * Created by tanha on 2017-02-12.
  */
 

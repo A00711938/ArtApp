@@ -12,39 +12,4 @@
     tools:context="a3t.groupartapp.comp3717.artapp.CollectionPageActivity"
     android:background="@android:color/holo_orange_light">
 
-    <TextView
-        android:text="My Collection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp"
-        android:textStyle="normal|bold"
-        android:layout_below="@+id/imageButton6"
-        android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/simble1"
-        android:id="@+id/imageView1"
-        android:background="@android:color/holo_orange_light"
-        android:layout_marginBottom="11dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/imageView2"
-        android:layout_alignStart="@+id/imageView2"
-        android:onClick="goToArtDetails"
-        android:contentDescription="Alphabet Ball" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/bridge"
-        android:id="@+id/imageView2"
-        android:layout_marginTop="37dp"
-        android:onClick="goToArtDetails1"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="Kiwanis Mosaic" />
-
 </RelativeLayout>

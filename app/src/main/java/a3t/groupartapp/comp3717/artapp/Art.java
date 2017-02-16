@@ -6,6 +6,10 @@ import java.util.List;
 import static a3t.groupartapp.comp3717.artapp.R.id.comment;
 
 /**
+ * Art class stores many components that are described in the
+ * new west metadata. This class can be used to store all the
+ * meta data from the city of new west - Public Art
+ *
  * Created by Ryan on 2017-02-12.
  */
 
@@ -57,5 +61,9 @@ public class Art {
 
     public List<String> getImages() {
         return images;
+    }
+
+    public String toString(){
+        return name;
     }
 }
