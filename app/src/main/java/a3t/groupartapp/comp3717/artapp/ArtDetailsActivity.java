@@ -10,48 +10,52 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static a3t.groupartapp.comp3717.artapp.R.drawable.kiwanis1;
+import static a3t.groupartapp.comp3717.artapp.R.id.imageView;
+import static android.text.TextUtils.concat;
 
 public class ArtDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_art_details);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String name = null;
-        List<String> comment = null;
-        List<String> img = null;
+        //This image resourceID can be passed from previous intent.
+        int imgId = R.drawable.alphabetball1;
+
+        //Retrieving the previous intent.
         Intent intent = getIntent();
-        String positionName = intent.getStringExtra("position");
-        DataHelper helper = new DataHelper(getApplicationContext());
-        helper.init();
-        List<Art> arts = helper.getArts();
-        for(Art art : arts) {
-            name = art.getName();
-            if(name.equalsIgnoreCase(positionName)) {
-                comment = art.getComment();
-                img =  art.getImages();
-                break;
-            }
+
+        //Retrieving Intent putExtra Values and saving them in their respective
+        //variables for further use.
+        String objName = intent.getStringExtra("name");
+        ArrayList<String> objComments = intent.getStringArrayListExtra("comments");
+
+        //MasterCommentsString pulls all the comments related to the item and arranges
+        //them so they are displayed in a nicer format (comment, space, comment, space, etc).
+        String masterCommentsString = "";
+        for(int i = 0; i < objComments.size(); i++){
+            masterCommentsString = masterCommentsString.concat(objComments.get(i) + "\n");
         }
 
-        EditText commentField = (EditText) findViewById(R.id.comment);
+        //Retrieving the views in order to update them with Art Obj data
+        //EditText commentField = (EditText) findViewById(R.id.comment);
         TextView nameField = (TextView) findViewById(R.id.name);
+        TextView comments = (TextView) findViewById(R.id.comments);
         ImageView imageView  = (ImageView) findViewById(R.id.imageView);
-        Log.d("Image name:", img.get(0));
 
-        int resId = getResources().getIdentifier(img.get(0), "drawable", getPackageName());
-        //int resId = R.drawable.kiwanis1;
-        Log.d("Resource id", "" + resId);
-
-        imageView.setImageResource(resId);
-
-            commentField.setText(comment.get(0));
-            nameField.setText(name);
+        //In here we pass the values retrieved from previous intent and upload
+        //them in this activity screen (in their respective places). Note the imgID
+        //resource is a placeholder that needs to be modified.
+        imageView.setImageResource(imgId);
+        nameField.setText(objName);
+        comments.setText(masterCommentsString);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
