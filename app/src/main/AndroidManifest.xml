@@ -27,6 +27,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
+        <provider
+            android:name=".ArtDataProvider"
+            android:authorities="a3t.groupartapp.comp3717.artapp"
+            android:enabled="true"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>
