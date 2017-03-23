@@ -27,7 +27,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>
         </activity>
-        <!--Intent Service to listen for geofence transitions-->
+        <provider
+            android:name=".ArtDataProvider"
+            android:authorities="a3t.groupartapp.comp3717.artapp"
+            android:enabled="true"
+            android:exported="false">
+        </provider>
     </application>
     <!--Request the necessary permissions for geofencing monitoring-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

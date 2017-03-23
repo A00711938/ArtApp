@@ -73,5 +73,4 @@
         android:textSize="18sp"
         android:layout_above="@+id/comment"
         android:layout_centerHorizontal="true" />
-
 </RelativeLayout>
