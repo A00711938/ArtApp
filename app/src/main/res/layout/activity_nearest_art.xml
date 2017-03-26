@@ -59,7 +59,7 @@
         android:layout_toEndOf="@+id/imageButton4"
         android:layout_marginLeft="31dp"
         android:layout_marginStart="31dp"
-        android:id="@+id/testNum" />
+        android:id="@+id/textView2" />
 
     <TextView
         android:text=" 1.0 Kilometers"
@@ -76,6 +76,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
         android:layout_alignBottom="@+id/imageButton3"
-        android:layout_alignLeft="@+id/testNum"
-        android:layout_alignStart="@+id/testNum" />
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2" />
+
+    <Button
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp"
+        android:text="Check" />
 </RelativeLayout>
