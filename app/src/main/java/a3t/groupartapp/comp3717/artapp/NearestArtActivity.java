@@ -25,6 +25,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -64,7 +66,7 @@ public class NearestArtActivity extends AppCompatActivity {
        // distance.distanceBetween(37.4219, -122.0879,49.2118,-122.9272, results);
         new NearestArtActivity.LoadArtDetail().execute(0);
 
-        button = (Button) findViewById(R.id.check);
+        //button = (Button) findViewById(R.id.check);
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -192,6 +194,7 @@ public class NearestArtActivity extends AppCompatActivity {
             case 10:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     //configureButton();
+                    locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
                 return;
         }
     }
@@ -211,7 +214,7 @@ public class NearestArtActivity extends AppCompatActivity {
             latitude = ((Place)m.getValue()).getLatitude();
             distance = new Location("Test Location");
             distance.distanceBetween(latitude,longitude,currLatitude,currLongitude,results);
-            meter = results[0]/1000;
+            meter = results[0];
             ((Place)m.getValue()).setDistance(meter);
         }
         //Fires findClosest method
@@ -241,28 +244,34 @@ public class NearestArtActivity extends AppCompatActivity {
             min=99999999;
         }
 
+        DecimalFormat dfmt = new DecimalFormat("0.#");
+
         TextView myView1 =(TextView)findViewById(R.id.textView2);
         TextView myView2 =(TextView)findViewById(R.id.textView3) ;
         TextView myView3 = (TextView)findViewById(R.id.textView4);
         double distance = (myPlace.get(index[0])).getDistance();
         String name = (myPlace.get(index[0])).getName();
-        myView1.setText(name+ " : "+Double.toString(distance) + " meters");
+        //myView1.setText(name+ " : "+Double.toString(distance) + " meters");
+        myView1.setText(name+ "\n"+ dfmt.format(distance) + " meters");
         distance = (myPlace.get(index[1])).getDistance();
         name = (myPlace.get(index[1])).getName();
-        myView2.setText(name+ " : "+Double.toString(distance) + " meters");
+        myView2.setText(name+ "\n"+ dfmt.format(distance) + " meters");
         distance = (myPlace.get(index[2])).getDistance();
         name = (myPlace.get(index[2])).getName();
-        myView3.setText(name+ " : "+Double.toString(distance) + " meters");
+        myView3.setText(name+ "\n"+ dfmt.format(distance) + " meters");
     }
 
-//    private void configureButton() {
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
-//                //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
-//                Log.d("Longitude: " , Double.toString(currLongitude));
-//            }
-//        });
-//    }
+/*
+    private void configureButton() {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
+                //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
+                Log.d("Longitude: " , Double.toString(currLongitude));
+            }
+        });
+    }
+    */
+
 }

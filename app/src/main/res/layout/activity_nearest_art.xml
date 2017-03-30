@@ -58,7 +58,7 @@
         android:layout_alignStart="@+id/textView" />
 
     <TextView
-        android:text=" 0.5 Kilometers"
+        android:text="Calculating the nearest arts ... "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageButton4"
@@ -69,7 +69,7 @@
         android:id="@+id/textView2" />
 
     <TextView
-        android:text=" 1.0 Kilometers"
+        android:text="Calculating the nearest arts..."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageButton2"
@@ -78,14 +78,14 @@
         android:id="@+id/textView4" />
 
     <TextView
-        android:text=" 0.8 Kilometers"
+        android:text="Calculating the nearest arts... "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
         android:layout_alignBottom="@+id/imageButton3"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignStart="@+id/textView2" />
-
+<!--
     <Button
         android:id="@+id/check"
         android:layout_width="wrap_content"
@@ -94,4 +94,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="21dp"
         android:text="Check" />
+        -->
 </RelativeLayout>
