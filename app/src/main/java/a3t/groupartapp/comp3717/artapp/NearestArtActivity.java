@@ -97,7 +97,8 @@ public class NearestArtActivity extends AppCompatActivity {
             }
             return;
         }else {
-            configureButton();
+            //configureButton();
+            locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
         }
 
         Log.d("Longitude: " , Double.toString(currLongitude));
