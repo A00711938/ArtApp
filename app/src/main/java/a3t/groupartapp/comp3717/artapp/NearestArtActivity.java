@@ -58,6 +58,8 @@ public class NearestArtActivity extends AppCompatActivity {
 
         distance = new Location("Test Location");
 
+        final View view = (View)findViewById(R.id.activity_nearest_art);
+
        // distance.distanceBetween(37.4219, -122.0879,49.2118,-122.9272, results);
         new NearestArtActivity.LoadArtDetail().execute(0);
 
@@ -75,6 +77,7 @@ public class NearestArtActivity extends AppCompatActivity {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
+//                locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
             }
             @Override
             public void onProviderEnabled(String provider) {
@@ -99,9 +102,14 @@ public class NearestArtActivity extends AppCompatActivity {
 
         Log.d("Longitude: " , Double.toString(currLongitude));
 
+        //locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
+
     }
 
-
+    /**
+     * This method access the cursor information (with DB info) and iterates through
+     * the DB objects and saves them into a map. The map format is key<Name> value<Location>
+     */
     private void saveAllPlace() {
 
         //while(!artCursor.isLast()) {
@@ -132,7 +140,10 @@ public class NearestArtActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * The AsyncTask Queries the DB and returns an array of DB objects
+     * that are stored inside the artCursor Variable.
+     */
     private class LoadArtDetail extends AsyncTask<Integer, Void, Long> {
 
         @Override
@@ -183,6 +194,13 @@ public class NearestArtActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method iterates through every items of the myPlace Map.
+     * On each element, it calculates the distance of the item in relation
+     * to the users distance. The value is calculated and stored in the Place item
+     * of the map (using the .setDistance method). Note: The Place class appears to
+     * be deprecated so there may not be future support.
+     */
     private void calculateDistance() {
          double longitude = 0;
          double latitude = 0;
@@ -194,9 +212,15 @@ public class NearestArtActivity extends AppCompatActivity {
             meter = results[0]/1000;
             ((Place)m.getValue()).setDistance(meter);
         }
+        //Fires findClosest method
         findClosest();
     }
 
+    /**
+     * After calculateDistance method is done, findClosest() iterates again through the myPlace
+     * Map. At the end, it returns the three smallest distances in respect to our latest position.
+     * The three smallest distances are then updated to the allocated TextViews.
+     */
     private void findClosest() {
         String[] index = {"-1","-1","-1"};
         double min=99999999;
