@@ -9,6 +9,7 @@ import android.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ public class CollectionPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.art_list);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         //Initializes data helper and creates Arts objects using the
         // Arts class. Data is saved as a List.

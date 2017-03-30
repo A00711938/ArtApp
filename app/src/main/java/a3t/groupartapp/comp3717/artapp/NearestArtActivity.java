@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -190,7 +191,7 @@ public class NearestArtActivity extends AppCompatActivity {
         switch (requestCode) {
             case 10:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    configureButton();
+                    //configureButton();
                 return;
         }
     }
@@ -254,14 +255,14 @@ public class NearestArtActivity extends AppCompatActivity {
         myView3.setText(name+ " : "+Double.toString(distance) + " meters");
     }
 
-    private void configureButton() {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
-                //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
-                Log.d("Longitude: " , Double.toString(currLongitude));
-            }
-        });
-    }
+//    private void configureButton() {
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
+//                //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, locationListener);
+//                Log.d("Longitude: " , Double.toString(currLongitude));
+//            }
+//        });
+//    }
 }

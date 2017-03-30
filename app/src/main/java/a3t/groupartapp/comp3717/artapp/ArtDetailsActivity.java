@@ -4,11 +4,19 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import static a3t.groupartapp.comp3717.artapp.R.id.comments;
+import static a3t.groupartapp.comp3717.artapp.R.id.imageView;
 
 public class ArtDetailsActivity extends AppCompatActivity {
     private Cursor artCursor;
@@ -17,19 +25,24 @@ public class ArtDetailsActivity extends AppCompatActivity {
     private String artId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_art_details);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.art_details_mod);
 
         //This image resourceID can be passed from previous intent.
 
         Intent intent = getIntent();
         artId = intent.getStringExtra("ArtId");
 
+        //For Whatever reason I'm getting a java.lang.IllegalStateException in
+        //here. It doesn't affect the app but FYI.
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         new LoadArtDetail().execute(Integer.parseInt(artId));
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home ) {
@@ -55,18 +68,32 @@ public class ArtDetailsActivity extends AppCompatActivity {
 
         //Retrieving the views in order to update them with Art Obj data
         //EditText commentField = (EditText) findViewById(R.id.comment);
-        TextView nameField = (TextView) findViewById(R.id.name);
-        TextView comments = (TextView) findViewById(R.id.comments);
-        ImageView imageView  = (ImageView) findViewById(R.id.imageView);
+//        TextView nameField = (TextView) findViewById(R.id.name);
+//        TextView comments = (TextView) findViewById(R.id.comments);
+//        ImageView imageView  = (ImageView) findViewById(R.id.imageView);
 
         //In here we pass the values retrieved from previous intent and upload
         //them in this activity screen (in their respective places). Note the imgID
         //resource is a placeholder that needs to be modified.
-        int imgId = R.drawable.alphabetball1;
-        imageView.setImageResource(imgId);
+//        int imgId = R.drawable.alphabetball1;
+//        imageView.setImageResource(imgId);
         artCursor.moveToFirst();
-        nameField.setText(artCursor.getString(1));
-        comments.setText(masterCommentsString);
+//        nameField.setText(artCursor.getString(1));
+//        comments.setText(masterCommentsString);
+
+        final String cheeseName = artCursor.getString(1);
+
+        CollapsingToolbarLayout collapsingToolbar =
+                (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(cheeseName);
+
+        loadBackdrop();
+    }
+
+    private void loadBackdrop() {
+        int imgId = R.drawable.alphabetball1;
+        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
+        Glide.with(this).load(imgId).centerCrop().into(imageView);
     }
 
     private class LoadArtDetail extends AsyncTask<Integer, Void, Long> {
