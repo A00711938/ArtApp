@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="ripleBlue">#0099CC</color>
+    <color name="greenTarget">#99cc00</color>
+    <color name="greenBlueTarget">#00cc99</color>
+    <color name="mustardTarget">#cc9900</color>
+    <color name="redTarget">#cc3300</color>
+    <color name="navbarColor">#673AB7</color>
+    <color name="superLightBlue">#f3fcff</color>
 </resources>

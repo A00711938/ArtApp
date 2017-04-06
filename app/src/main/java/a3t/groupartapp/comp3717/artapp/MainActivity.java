@@ -1,14 +1,18 @@
 package a3t.groupartapp.comp3717.artapp;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.JsonReader;
+import android.support.v4.view.LayoutInflaterCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.context.IconicsLayoutInflater;
+import com.skyfishjy.library.RippleBackground;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +21,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -27,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         final JSONArray artArray;
         final ArrayList<ContentValues> bulkArts;
 
+        //The layout inflater allows us to use the font awesome library through the android-iconics library.
+        //https://github.com/mikepenz/Android-Iconics
+        LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -65,11 +71,18 @@ public class MainActivity extends AppCompatActivity {
                 dataHelper.close();
             }
         }
+
+        startRippleAnimation();
     }
 
     public void startApp(View view){
         Intent i = new Intent(this, WelcomeScreenActivity.class);
         startActivity(i);
+    }
+
+    public void startRippleAnimation(){
+        final RippleBackground rippleBackground=(RippleBackground)findViewById(R.id.content);
+        rippleBackground.startRippleAnimation();
     }
 
     public String loadJSONFromAsset() {
