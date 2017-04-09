@@ -75,7 +75,7 @@ public class CollectionPageActivity extends AppCompatActivity {
                 Cursor cursor = ((SimpleCursorAdapter) listView.getAdapter()).getCursor();
                 cursor.moveToPosition(position);
                 artId = cursor.getString(0);
-                Log.d("ArtId", artId);
+                //Log.d("ArtId", artId);
                 //Testing. It works. Clicked item name is displayed correctly on screen.
                 //Log.i("CLicked Art Piece: ", artSelection.getName());
 

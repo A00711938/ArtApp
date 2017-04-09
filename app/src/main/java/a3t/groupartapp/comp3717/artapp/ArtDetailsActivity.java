@@ -11,12 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import static a3t.groupartapp.comp3717.artapp.R.id.comments;
-import static a3t.groupartapp.comp3717.artapp.R.id.imageView;
 
 public class ArtDetailsActivity extends AppCompatActivity {
     private Cursor artCursor;
@@ -91,8 +88,24 @@ public class ArtDetailsActivity extends AppCompatActivity {
     }
 
     private void loadBackdrop() {
-        int imgId = R.drawable.alphabetball1;
-        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
+        final ImageView imageView;
+        String imageFileName = "";
+        try {
+            imageCursor.moveToFirst();
+            imageFileName = imageCursor.getString(0);
+            int index = imageFileName.indexOf(".");
+            imageFileName = imageFileName.substring(0, index);
+            Log.d("IMAGE NAME", imageFileName);
+        } catch (Exception ex) {
+
+        }
+        int imgId;
+        if (imageFileName.isEmpty()) {
+            imgId = R.drawable.sample;
+        } else {
+            imgId = getResources().getIdentifier(imageFileName, "drawable", getPackageName());
+        }
+        imageView = (ImageView) findViewById(R.id.backdrop);
         Glide.with(this).load(imgId).centerCrop().into(imageView);
     }
 
