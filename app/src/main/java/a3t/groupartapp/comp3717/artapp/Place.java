@@ -12,7 +12,7 @@ public class Place {
     public static double CurrLongitude = 0;
     public static double CurrLatitude = 0;
 
-    public Place( String name, double longitude,double latitude ) {
+    public Place( String name, double longitude,double latitude) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.name = name;
