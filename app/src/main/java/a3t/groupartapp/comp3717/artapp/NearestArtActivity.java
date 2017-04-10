@@ -1,13 +1,11 @@
 package a3t.groupartapp.comp3717.artapp;
 
-import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -16,15 +14,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.Map;
@@ -131,13 +124,14 @@ public class NearestArtActivity extends AppCompatActivity {
                    new Place(artCursor.getString(1),
                            Double.parseDouble(artCursor.getString(2)),
                            Double.parseDouble(artCursor.getString(3))
+
                    ));
            //Log.d("id: : " ,artCursor.getString(0));
            //}
        }
        // Log.d("size: " ,Integer.toString(g));
 
-        Log.d("Longitude: " , "heheheh");
+
         for(Map.Entry m:myPlace.entrySet()){
             String temp = (String)m.getKey();
         }
@@ -259,6 +253,13 @@ public class NearestArtActivity extends AppCompatActivity {
         distance = (myPlace.get(index[2])).getDistance();
         name = (myPlace.get(index[2])).getName();
         myView3.setText(name+ "\n"+ dfmt.format(distance) + " meters");
+
+        if(distance <= 200) {
+            Intent i = new Intent(this, ArtDetailsActivity.class);
+            i.putExtra("ArtId", index[0]);
+            //i.putStringArrayListExtra("comments", (ArrayList<String>)artSelection.getComment());
+            startActivity(i);
+        }
     }
 
 /*
