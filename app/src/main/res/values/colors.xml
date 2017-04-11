@@ -10,4 +10,5 @@
     <color name="redTarget">#cc3300</color>
     <color name="navbarColor">#673AB7</color>
     <color name="superLightBlue">#f3fcff</color>
+    <color name="lightestGreen">#f3fff6</color>
 </resources>

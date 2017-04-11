@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static a3t.groupartapp.comp3717.artapp.R.layout.item_list;
 import static android.content.Context.LOCATION_SERVICE;
 
 
@@ -305,7 +306,7 @@ public class NearestArtActivity extends ListFragment {
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, test);
+                R.layout.list_item, R.id.artName, test);
 
         setListAdapter(adapter);
         //getListView().setOnItemClickListener(this);

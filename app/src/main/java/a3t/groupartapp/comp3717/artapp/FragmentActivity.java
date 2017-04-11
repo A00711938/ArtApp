@@ -28,9 +28,9 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
             public Fragment getItem(int position) {
                 switch(position){
                     case 0:
-                        return NearestArtActivity.newInstance("Nearest Art");
-                    case 1:
                         return CollectionPageActivity.newInstance("My Collection");
+                    case 1:
+                        return NearestArtActivity.newInstance("Nearest Art");
                     default:
                         return null;
                 }
@@ -48,7 +48,7 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
         final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb_horizontal_fragment);
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         //In order to obtain a customized drawable icon, instantiate as below.
-        final Drawable ic_android = new IconicsDrawable(this)
+        final Drawable ic_compass = new IconicsDrawable(this)
                 .icon(FontAwesome.Icon.faw_compass)
                 .color(Color.RED)
                 .sizeDp(24);
@@ -61,17 +61,17 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
         models.add(
                 new NavigationTabBar.Model.Builder(
                         //Model drawable
-                        ic_android,
+                        ic_book,
                         //Model Color
                         Color.parseColor(colors[0]))
-                        .title("Heart")
+                        .title("Collection")
                         .build()
         );
         models.add(
                 new NavigationTabBar.Model.Builder(
-                        ic_book,
+                        ic_compass,
                         Color.parseColor(colors[1]))
-                        .title("Cup")
+                        .title("Compass")
                         .build()
         );
 

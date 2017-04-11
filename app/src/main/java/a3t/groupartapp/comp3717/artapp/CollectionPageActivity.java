@@ -131,8 +131,6 @@ public class CollectionPageActivity extends ListFragment {
 
     public void createAdapter(){
         test = new ArrayList<>();
-//        test.add("one");
-//        test.add("two");
         cursor.moveToFirst();
         test.add(cursor.getString(1));
         Log.d("NAME: ", test.get(0));
@@ -144,10 +142,31 @@ public class CollectionPageActivity extends ListFragment {
         Log.d("SIZE", ""+test.size());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, test);
+                R.layout.list_item, R.id.artName, test);
 
         setListAdapter(adapter);
-        //getListView().setOnItemClickListener(this);
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Art artSelection;
+                final String artId;
+
+                //Grabs the item clicked and saves the object in a variable.
+                //selectedArtId = listView.getItemAtPosition(position);
+
+                cursor.moveToPosition(position);
+                artId = cursor.getString(0);
+                Log.d("ArtId", artId);
+
+                //Testing. It works. Clicked item name is displayed correctly on screen.
+                Log.i("CLicked Art Piece: ",  artId);
+
+                Intent i = new Intent(getActivity(), ArtDetailsActivity.class);
+                i.putExtra("ArtId", artId);
+                //i.putStringArrayListExtra("comments", (ArrayList<String>)artSelection.getComment());
+                startActivity(i);
+            }
+        });
     }
 
     /**

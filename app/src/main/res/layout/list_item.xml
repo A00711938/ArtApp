@@ -4,16 +4,34 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="70dp"
-    android:background="#D2B48C">
+    android:minHeight="70dp">
+
+    <!--<TextView-->
+        <!--android:text="TextView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/artName"-->
+        <!--android:textStyle="bold"-->
+        <!--android:paddingTop="25dp"-->
+        <!--android:paddingLeft="25dp"-->
+        <!--/>-->
 
     <TextView
-        android:text="TextView"
+        android:id="@+id/artName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/artName"
+        android:padding="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/bg_round_rect"
+        android:gravity="center"
+        android:text="Navigation"
+        android:textColor="#f0eef3"
         android:textStyle="bold"
-        android:paddingTop="25dp"
-        android:paddingLeft="25dp"
-        />
+        android:textSize="20dp"/>
+
 </LinearLayout>
