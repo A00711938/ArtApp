@@ -101,10 +101,12 @@ public class CollectionPageActivity extends ListFragment {
 
                 //Grabs the item clicked and saves the object in a variable.
                 //selectedArtId = listView.getItemAtPosition(position);
+
 //                Cursor cursor = ((SimpleCursorAdapter) listView.getAdapter()).getCursor();
 //                cursor.moveToPosition(position);
 //                artId = cursor.getString(0);
 //                Log.d("ArtId", artId);
+
                 //Testing. It works. Clicked item name is displayed correctly on screen.
                 //Log.i("CLicked Art Piece: ", artSelection.getName());
 

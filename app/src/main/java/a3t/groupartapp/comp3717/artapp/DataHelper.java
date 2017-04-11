@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.util.Log;
 
+import static android.os.Build.VERSION_CODES.N;
+
 /**
  * This class reads a file (tokenized with the | delimiter) and
  * places the information in an Art object. DataHelper creates and List
@@ -75,7 +77,6 @@ public class DataHelper extends SQLiteOpenHelper{
         final String CREATE_ART_TABLE;
         final String CREATE_ART_COMMENT_TABLE;
         final String CREATE_ART_PHOTO_TABLE;
-        final String CREATE_ART_COLLECT_TABLE;
 
         CREATE_ART_TABLE = "CREATE TABLE IF NOT EXISTS "
                 + ART_TABLE
@@ -166,6 +167,48 @@ public class DataHelper extends SQLiteOpenHelper{
             db.close();
         }
     }
+
+    public Cursor getArtByNanme(String name) {
+        final SQLiteDatabase db;
+        final Cursor cursor;
+        db = getReadableDatabase();
+        cursor = db.query(
+                ART_TABLE,
+                new String[]{"*"},
+                ART_NAME + "=?",
+                new String[]{name},
+                null,
+                null,
+                ART_ID);
+        return cursor;
+    }
+
+    public void insertArtPhotos(ContentValues values[]) {
+        final SQLiteDatabase db;
+
+        db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for (ContentValues artPhoto : values) {
+                //Log.d("DataHelper", artPhoto.toString());
+                Log.d("DataHelper", artPhoto.getAsString(ART_NAME));
+                final Cursor cursor;
+                final int artId;
+                cursor = getArtByNanme(artPhoto.getAsString(ART_NAME));
+                cursor.moveToFirst();
+                ContentValues newValues = new ContentValues();
+                newValues.put(PHOTO_ART_ID, cursor.getString(0));
+                newValues.put(PHOTO_FILE, artPhoto.getAsString("File"));
+                db.insert(PHOTO_TABLE, null, newValues);
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            db.endTransaction();
+            db.close();
+        }
+    }
     Cursor getAllCollectedArts() {
         final SQLiteDatabase db;
         final Cursor cursor;
@@ -173,7 +216,7 @@ public class DataHelper extends SQLiteOpenHelper{
         db = getReadableDatabase();
         cursor = db.query(ART_TABLE,
                 new String[]{ART_ID, ART_NAME},
-                "WHERE " + ART_COLLECTED + "=?",
+                ART_COLLECTED + "=?",
                 new String[]{"1"},
                 null,
                 null,

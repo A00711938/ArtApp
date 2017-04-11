@@ -28,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
         final DataHelper dataHelper;
         final String jsonArts;
         final JSONArray artArray;
-        final ArrayList<ContentValues> bulkArts;
+        final String jsonPhotos;
+        final JSONArray photoArray;
+        ArrayList<ContentValues> bulkValues;
 
         //The layout inflater allows us to use the font awesome library through the android-iconics library.
         //https://github.com/mikepenz/Android-Iconics
@@ -43,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
         //Log.d("DATABASE EMPTY", "" + dataHelper.isDbEmpty());
 
         if (dataHelper.isDbEmpty()) {
-            jsonArts = loadJSONFromAsset();
+            jsonArts = loadJSONFromAsset("public_art.json");
+            jsonPhotos = loadJSONFromAsset("art_photos.json");
 
-            bulkArts = new ArrayList<>();
+            bulkValues = new ArrayList<>();
             try {
                 artArray = new JSONArray(jsonArts);
                 int i = 0;
@@ -60,11 +63,29 @@ public class MainActivity extends AppCompatActivity {
                     artValues.put(ArtDataProvider.ART_LONGITUDE, art.getString("X"));
                     artValues.put(ArtDataProvider.ART_LATITUDE, art.getString("Y"));
                     artValues.put(ArtDataProvider.ART_COLLECTED, 1);
-                    bulkArts.add(artValues);
+                    bulkValues.add(artValues);
                     //Log.d("JSON", art.toString());
                 }
-                Log.d("ContentValues[]", bulkArts.toArray(new ContentValues[0]).toString());
-                dataHelper.insertArts(bulkArts.toArray(new ContentValues[0]));
+                //Log.d("ContentValues[]", bulkArts.toArray(new ContentValues[0]).toString());
+                dataHelper.insertArts(bulkValues.toArray(new ContentValues[0]));
+
+                i = 0;
+                photoArray = new JSONArray(jsonPhotos);
+                //Log.d("Read Photo", photoArray.toString());
+
+                bulkValues = new ArrayList<>();
+                JSONObject photo;
+                while (!photoArray.isNull(i)) {
+                    ContentValues photoValues = new ContentValues();
+                    photo = photoArray.getJSONObject(i++);
+                   // Log.d("Read Photo", photo.toString());
+                    photoValues.put(ArtDataProvider.ART_NAME, photo.getString(ArtDataProvider.ART_NAME));
+                    photoValues.put(ArtDataProvider.PHOTO_FILE, photo.getString(ArtDataProvider.PHOTO_FILE));
+
+                    bulkValues.add(photoValues);
+                }
+
+                dataHelper.insertArtPhotos(bulkValues.toArray(new ContentValues[0]));
             } catch (JSONException e) {
                 e.printStackTrace();
             } finally {
@@ -89,13 +110,13 @@ public class MainActivity extends AppCompatActivity {
         rippleBackground.startRippleAnimation();
     }
 
-    public String loadJSONFromAsset() {
+    public String loadJSONFromAsset(String jsonFile) {
         String json = null;
         final int size;
         byte[] buffer;
         InputStream is;
         try {
-            is = getAssets().open("public_art.json");
+            is = getAssets().open(jsonFile);
             size = is.available();
             buffer = new byte[size];
             is.read(buffer);
