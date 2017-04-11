@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="a3t.groupartapp.comp3717.artapp">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Request the necessary permissions for geofencing monitoring -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +14,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,48 +21,48 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".NearestArtActivity"
+        <activity
+            android:name=".NearestArtActivity"
             android:label="Nearest Art"
-            android:theme="@style/AppTheme2"
-            android:parentActivityName=".WelcomeScreenActivity">
+            android:parentActivityName=".WelcomeScreenActivity"
+            android:theme="@style/AppTheme2">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".WelcomeScreenActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme2">
 
-
-        <activity android:name=".WelcomeScreenActivity"
-            android:theme="@style/AppTheme2"
-            android:parentActivityName=".MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
-
         <activity android:name=".ArtDetailsActivity" />
-
         <activity
             android:name=".CollectionPageActivity"
             android:label="My Collection"
-            android:theme="@style/AppTheme2"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme2">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".MainActivity" />
         </activity>
 
         <provider
             android:name=".ArtDataProvider"
             android:authorities="a3t.groupartapp.comp3717.artapp"
             android:enabled="true"
-            android:exported="false">
-        </provider>
+            android:exported="false" />
+
+        <activity android:name=".NavigationTabBarActivity" />
+        <activity android:name=".FragmentActivity"></activity>
     </application>
-    <!--Request the necessary permissions for geofencing monitoring-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
 </manifest>

@@ -4,10 +4,15 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.Manifest;
 import android.content.Intent;
@@ -20,11 +25,14 @@ import android.support.v4.app.ActivityCompat;
 import android.widget.Button;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static android.content.Context.LOCATION_SERVICE;
 
-public class NearestArtActivity extends AppCompatActivity {
+
+public class NearestArtActivity extends ListFragment {
 
     protected Location distance;
 
@@ -45,22 +53,43 @@ public class NearestArtActivity extends AppCompatActivity {
     private double currLatitude = 0;
     private Button button;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nearest_art);
+    ArrayList<String> test;
 
-        new NearestArtActivity.LoadArtDetail().execute(0);
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+////        setContentView(R.layout.activity_nearest_art);
+//
+////        new NearestArtActivity.LoadArtDetail().execute(0);
+//
+////        distance = new Location("Test Location");
+//
+////        final View view = (View)findViewById(R.id.activity_nearest_art);
+//
+//       // distance.distanceBetween(37.4219, -122.0879,49.2118,-122.9272, results);
+////        new NearestArtActivity.LoadArtDetail().execute(0);
+//
+//    }
+
+    // Inflate the view for the fragment based on layout XML
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.art_list, container, false);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated (Bundle SavedInstanceState){
+        super.onActivityCreated(SavedInstanceState);
 
         distance = new Location("Test Location");
 
-        final View view = (View)findViewById(R.id.activity_nearest_art);
+        new LoadArtDetail().execute(0);
 
-       // distance.distanceBetween(37.4219, -122.0879,49.2118,-122.9272, results);
-        new NearestArtActivity.LoadArtDetail().execute(0);
-
+        Log.d("Distance: ", "txt1");
         //button = (Button) findViewById(R.id.check);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -69,6 +98,7 @@ public class NearestArtActivity extends AppCompatActivity {
                 Place.CurrLatitude = currLatitude;
                 Place.CurrLongitude = currLongitude;
                 calculateDistance();
+                Log.d("Distance: ", "txt5");
             }
 
             @Override
@@ -84,7 +114,7 @@ public class NearestArtActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{
                         Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -100,7 +130,17 @@ public class NearestArtActivity extends AppCompatActivity {
         Log.d("Longitude: " , Double.toString(currLongitude));
 
         //locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
+    }
 
+    public static NearestArtActivity newInstance(String text) {
+
+        NearestArtActivity n = new NearestArtActivity();
+        Bundle b = new Bundle();
+        b.putString("msg", text);
+
+        n.setArguments(b);
+
+        return n;
     }
 
     /**
@@ -134,7 +174,9 @@ public class NearestArtActivity extends AppCompatActivity {
 
         for(Map.Entry m:myPlace.entrySet()){
             String temp = (String)m.getKey();
+            Log.d("NAME", ""+m.getValue());
         }
+        Log.d("SIZE", ""+myPlace.size());
 
     }
 
@@ -147,7 +189,7 @@ public class NearestArtActivity extends AppCompatActivity {
         @Override
         protected Long doInBackground(Integer... params) {
             final ContentResolver contentResolver;
-            contentResolver = getContentResolver();
+            contentResolver = getActivity().getContentResolver();
             artCursor = contentResolver.query(
                     ArtDataProvider.ART_URI,
                     new String[] {ArtDataProvider.ART_ID,ArtDataProvider.ART_NAME,ArtDataProvider.ART_LONGITUDE,ArtDataProvider.ART_LATITUDE},
@@ -239,23 +281,38 @@ public class NearestArtActivity extends AppCompatActivity {
         }
 
         DecimalFormat dfmt = new DecimalFormat("0.#");
+        test = new ArrayList<>();
 
-        TextView myView1 =(TextView)findViewById(R.id.textView2);
-        TextView myView2 =(TextView)findViewById(R.id.textView3) ;
-        TextView myView3 = (TextView)findViewById(R.id.textView4);
-        double distance = (myPlace.get(index[0])).getDistance();
-        String name = (myPlace.get(index[0])).getName();
+//        TextView myView1 =(TextView)findViewById(R.id.textView2);
+//        TextView myView2 =(TextView)findViewById(R.id.textView3) ;
+//        TextView myView3 = (TextView)findViewById(R.id.textView4);
+        double distance1 = (myPlace.get(index[0])).getDistance();
+        String name1 = (myPlace.get(index[0])).getName();
         //myView1.setText(name+ " : "+Double.toString(distance) + " meters");
-        myView1.setText(name+ "\n"+ dfmt.format(distance) + " meters");
-        distance = (myPlace.get(index[1])).getDistance();
-        name = (myPlace.get(index[1])).getName();
-        myView2.setText(name+ "\n"+ dfmt.format(distance) + " meters");
-        distance = (myPlace.get(index[2])).getDistance();
-        name = (myPlace.get(index[2])).getName();
-        myView3.setText(name+ "\n"+ dfmt.format(distance) + " meters");
+//        myView1.setText(name+ "\n"+ dfmt.format(distance) + " meters");
+        double distance2 = (myPlace.get(index[1])).getDistance();
+        String name2 = (myPlace.get(index[1])).getName();
+//        myView2.setText(name+ "\n"+ dfmt.format(distance) + " meters");
+        double distance3 = (myPlace.get(index[2])).getDistance();
+        String name3 = (myPlace.get(index[2])).getName();
+//        myView3.setText(name+ "\n"+ dfmt.format(distance) + " meters");
 
-        if(distance <= 200) {
-            Intent i = new Intent(this, ArtDetailsActivity.class);
+        test.add(name1+ "\n"+ dfmt.format(distance1) + " meters");
+        test.add(name2+ "\n"+ dfmt.format(distance2) + " meters");
+        test.add(name3+ "\n"+ dfmt.format(distance3) + " meters");
+
+        Log.d("SIZE", ""+test.size());
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, test);
+
+        setListAdapter(adapter);
+        //getListView().setOnItemClickListener(this);
+
+        //Triggers activity detailed page when user closer than 200 meters.
+        if(distance1 <= 200) {
+            Intent i = new Intent(getActivity(), ArtDetailsActivity.class);
             i.putExtra("ArtId", index[0]);
             //i.putStringArrayListExtra("comments", (ArrayList<String>)artSelection.getComment());
             startActivity(i);

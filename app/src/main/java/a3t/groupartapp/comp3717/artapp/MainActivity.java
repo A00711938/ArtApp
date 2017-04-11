@@ -76,7 +76,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startApp(View view){
-        Intent i = new Intent(this, WelcomeScreenActivity.class);
+        Intent i = new Intent(this,
+                //WelcomeScreenActivity.class
+                //NavigationTabBarActivity.class
+                FragmentActivity.class
+        );
         startActivity(i);
     }
 
