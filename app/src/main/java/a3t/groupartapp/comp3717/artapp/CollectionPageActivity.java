@@ -8,9 +8,9 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.*;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -53,6 +53,7 @@ public class CollectionPageActivity extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.art_list, container, false);
+
         return view;
     }
 
@@ -150,12 +151,16 @@ public class CollectionPageActivity extends ListFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Art artSelection;
                 final String artId;
+                final String artAddress;
+                final String artDescription;
 
                 //Grabs the item clicked and saves the object in a variable.
                 //selectedArtId = listView.getItemAtPosition(position);
 
                 cursor.moveToPosition(position);
                 artId = cursor.getString(0);
+                artAddress = cursor.getString(4);
+                artDescription = cursor.getString(5);
                 Log.d("ArtId", artId);
 
                 //Testing. It works. Clicked item name is displayed correctly on screen.
@@ -163,6 +168,8 @@ public class CollectionPageActivity extends ListFragment {
 
                 Intent i = new Intent(getActivity(), ArtDetailsActivity.class);
                 i.putExtra("ArtId", artId);
+                i.putExtra("Address", artAddress);
+                i.putExtra("Description", artDescription);
                 //i.putStringArrayListExtra("comments", (ArrayList<String>)artSelection.getComment());
                 startActivity(i);
             }
@@ -181,7 +188,18 @@ public class CollectionPageActivity extends ListFragment {
             contentResolver = getActivity().getContentResolver();
             cursor = contentResolver.query(
                     ArtDataProvider.ART_URI,
-                    new String[] {ArtDataProvider.ART_ID,ArtDataProvider.ART_NAME,ArtDataProvider.ART_LONGITUDE,ArtDataProvider.ART_LATITUDE},
+                    new String[] {  //0
+                                    ArtDataProvider.ART_ID,
+                                    //1
+                                    ArtDataProvider.ART_NAME,
+                                    //2
+                                    ArtDataProvider.ART_LONGITUDE,
+                                    //3
+                                    ArtDataProvider.ART_LATITUDE,
+                                    //4
+                                    ArtDataProvider.ART_ADDRESS,
+                                    //5
+                                    ArtDataProvider.ART_DESCRIPTION},
                     null,
                     null,
                     null,null);

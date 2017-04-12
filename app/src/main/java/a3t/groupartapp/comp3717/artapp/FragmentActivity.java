@@ -2,11 +2,10 @@ package a3t.groupartapp.comp3717.artapp;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -77,8 +76,8 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
 
         navigationTabBar.setModels(models);
         navigationTabBar.setViewPager(viewPager);
-
         navigationTabBar.setBehaviorEnabled(true);
+
 
         navigationTabBar.setOnTabBarSelectedIndexListener(new NavigationTabBar.OnTabBarSelectedIndexListener() {
             @Override
@@ -93,12 +92,10 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
         navigationTabBar.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(final int position) {
-
             }
 
             @Override
@@ -106,6 +103,7 @@ public class FragmentActivity extends android.support.v4.app.FragmentActivity {
 
             }
         });
+
     }
 
 

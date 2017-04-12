@@ -3,16 +3,30 @@ package a3t.groupartapp.comp3717.artapp;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.ViewPropertyAnimation;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.varunest.sparkbutton.SparkButton;
+import com.varunest.sparkbutton.SparkButtonBuilder;
 
 
 public class ArtDetailsActivity extends AppCompatActivity {
@@ -20,6 +34,19 @@ public class ArtDetailsActivity extends AppCompatActivity {
     private Cursor imageCursor;
     private Cursor commentCursor;
     private String artId;
+    private String address;
+    private String info;
+
+    final Drawable ic_compass = new IconicsDrawable(this)
+            .icon(FontAwesome.Icon.faw_compass)
+            .color(Color.RED)
+            .sizeDp(24);
+
+    final Drawable ic_book = new IconicsDrawable(this)
+            .icon(FontAwesome.Icon.faw_book)
+            .color(Color.RED)
+            .sizeDp(24);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +56,10 @@ public class ArtDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         artId = intent.getStringExtra("ArtId");
+        address = intent.getStringExtra("Address");
+        info = intent.getStringExtra("Description");
+
+
 
         //For Whatever reason I'm getting a java.lang.IllegalStateException in
         //here. It doesn't affect the app but FYI.
@@ -65,10 +96,11 @@ public class ArtDetailsActivity extends AppCompatActivity {
 
         //Retrieving the views in order to update them with Art Obj data
         //EditText commentField = (EditText) findViewById(R.id.comment);
-//        TextView nameField = (TextView) findViewById(R.id.name);
-//        TextView comments = (TextView) findViewById(R.id.comments);
+        TextView infoText = (TextView) findViewById(R.id.infoText);
+        TextView addressText = (TextView) findViewById(R.id.addressText);
 //        ImageView imageView  = (ImageView) findViewById(R.id.imageView);
-
+        infoText.setText(info);
+        addressText.setText(address);
         //In here we pass the values retrieved from previous intent and upload
         //them in this activity screen (in their respective places). Note the imgID
         //resource is a placeholder that needs to be modified.
