@@ -67,8 +67,13 @@ public class ArtDetailsActivity extends AppCompatActivity {
 
         new LoadArtDetail().execute(Integer.parseInt(artId));
 
+
+    }
+
+    public void openMap(View view) {
         WebView webView = (WebView) findViewById(R.id.map);
         webView.loadUrl("https://www.google.ca/maps/@49.2803222,-123.112195,15z");
+
     }
 
 
