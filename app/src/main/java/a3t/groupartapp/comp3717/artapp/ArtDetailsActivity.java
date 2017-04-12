@@ -1,32 +1,32 @@
 package a3t.groupartapp.comp3717.artapp;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
+import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.ViewPropertyAnimation;
-import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.varunest.sparkbutton.SparkButton;
-import com.varunest.sparkbutton.SparkButtonBuilder;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
+import com.mikepenz.iconics.context.IconicsLayoutInflater;
 
 
 public class ArtDetailsActivity extends AppCompatActivity {
@@ -37,15 +37,6 @@ public class ArtDetailsActivity extends AppCompatActivity {
     private String address;
     private String info;
 
-    final Drawable ic_compass = new IconicsDrawable(this)
-            .icon(FontAwesome.Icon.faw_compass)
-            .color(Color.RED)
-            .sizeDp(24);
-
-    final Drawable ic_book = new IconicsDrawable(this)
-            .icon(FontAwesome.Icon.faw_book)
-            .color(Color.RED)
-            .sizeDp(24);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +44,15 @@ public class ArtDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.art_details_mod);
 
         //This image resourceID can be passed from previous intent.
-
         Intent intent = getIntent();
         artId = intent.getStringExtra("ArtId");
         address = intent.getStringExtra("Address");
         info = intent.getStringExtra("Description");
 
-
+//        final Drawable ic_pluscircle = new IconicsDrawable(this)
+//                .icon(FontAwesome.Icon.faw_plus_circle)
+//                .color(Color.RED)
+//                .sizeDp(24);
 
         //For Whatever reason I'm getting a java.lang.IllegalStateException in
         //here. It doesn't affect the app but FYI.
@@ -67,8 +60,15 @@ public class ArtDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        new LoadArtDetail().execute(Integer.parseInt(artId));
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setImageResource(R.drawable.ic_discuss);
 
+        new LoadArtDetail().execute(Integer.parseInt(artId));
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
 
     @Override

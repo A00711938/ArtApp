@@ -308,7 +308,7 @@ public class NearestArtActivity extends ListFragment {
 
         Activity activity = getActivity();
         if (activity != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                     R.layout.list_item, R.id.artName, test);
 
             setListAdapter(adapter);
