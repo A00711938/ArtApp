@@ -89,6 +89,7 @@ public class ArtDetailsActivity extends AppCompatActivity {
     }
 
     private void updateUi() {
+        final String cheeseName;
         String masterCommentsString = "";
         while(commentCursor.moveToNext()){
             masterCommentsString = masterCommentsString.concat(commentCursor.getString(0) + "\n");
@@ -109,8 +110,8 @@ public class ArtDetailsActivity extends AppCompatActivity {
         artCursor.moveToFirst();
 //        nameField.setText(artCursor.getString(1));
 //        comments.setText(masterCommentsString);
+        cheeseName = artCursor.getString(1);
 
-        final String cheeseName = artCursor.getString(1);
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -127,13 +128,13 @@ public class ArtDetailsActivity extends AppCompatActivity {
             imageFileName = imageCursor.getString(0);
             int index = imageFileName.indexOf(".");
             imageFileName = imageFileName.substring(0, index);
-            Log.d("IMAGE NAME", imageFileName);
+            //Log.d("IMAGE NAME", imageFileName);
         } catch (Exception ex) {
 
         }
         int imgId;
         if (imageFileName.isEmpty()) {
-            imgId = R.drawable.sample;
+            imgId = R.drawable.public_art;
         } else {
             imgId = getResources().getIdentifier(imageFileName, "drawable", getPackageName());
         }
@@ -149,7 +150,7 @@ public class ArtDetailsActivity extends AppCompatActivity {
             contentResolver = getContentResolver();
             artCursor = contentResolver.query(
                     ArtDataProvider.ART_URI,
-                    new String[] {ArtDataProvider.ART_ID,ArtDataProvider.ART_NAME},
+                    new String[] {ArtDataProvider.ART_ID,ArtDataProvider.ART_NAME, ArtDataProvider.ART_COLLECTED},
                     ArtDataProvider.ART_ID + "=?",
                     new String[]{artId},
                     null,null);

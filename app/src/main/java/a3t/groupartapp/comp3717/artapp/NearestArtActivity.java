@@ -1,5 +1,6 @@
 package a3t.groupartapp.comp3717.artapp;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.location.Location;
@@ -293,7 +294,7 @@ public class NearestArtActivity extends ListFragment {
 //        myView1.setText(name+ "\n"+ dfmt.format(distance) + " meters");
         double distance2 = (myPlace.get(index[1])).getDistance();
         String name2 = (myPlace.get(index[1])).getName();
-//        myView2.setText(name+ "\n"+ dfmt.format(distance) + " meters");
+//        myView2.setText(name+ "\n"+ dfmt.format(distance) + " meters");`12
         double distance3 = (myPlace.get(index[2])).getDistance();
         String name3 = (myPlace.get(index[2])).getName();
 //        myView3.setText(name+ "\n"+ dfmt.format(distance) + " meters");
@@ -305,10 +306,13 @@ public class NearestArtActivity extends ListFragment {
         Log.d("SIZE", ""+test.size());
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.list_item, R.id.artName, test);
+        Activity activity = getActivity();
+        if (activity != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity,
+                    R.layout.list_item, R.id.artName, test);
 
-        setListAdapter(adapter);
+            setListAdapter(adapter);
+        }
         //getListView().setOnItemClickListener(this);
 
         //Triggers activity detailed page when user closer than 200 meters.
