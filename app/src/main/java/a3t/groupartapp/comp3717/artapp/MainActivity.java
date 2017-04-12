@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     artValues.put(ArtDataProvider.ART_LATITUDE, art.getString("Y"));
                     artValues.put(ArtDataProvider.ART_COLLECTED, 1);
                     bulkValues.add(artValues);
-                    //Log.d("JSON", art.toString());
+                    Log.d("JSON", art.toString());
                 }
                 //Log.d("ContentValues[]", bulkArts.toArray(new ContentValues[0]).toString());
                 dataHelper.insertArts(bulkValues.toArray(new ContentValues[0]));

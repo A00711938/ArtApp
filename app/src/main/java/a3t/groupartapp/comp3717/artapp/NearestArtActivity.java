@@ -293,7 +293,7 @@ public class NearestArtActivity extends ListFragment {
 //        myView1.setText(name+ "\n"+ dfmt.format(distance) + " meters");
         double distance2 = (myPlace.get(index[1])).getDistance();
         String name2 = (myPlace.get(index[1])).getName();
-//        myView2.setText(name+ "\n"+ dfmt.format(distance) + " meters");
+//        myView2.setText(name+ "\n"+ dfmt.format(distance) + " meters");`12
         double distance3 = (myPlace.get(index[2])).getDistance();
         String name3 = (myPlace.get(index[2])).getName();
 //        myView3.setText(name+ "\n"+ dfmt.format(distance) + " meters");
