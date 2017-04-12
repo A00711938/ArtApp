@@ -19,6 +19,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,7 +66,11 @@ public class ArtDetailsActivity extends AppCompatActivity {
         fab.setImageResource(R.drawable.ic_discuss);
 
         new LoadArtDetail().execute(Integer.parseInt(artId));
+
+        WebView webView = (WebView) findViewById(R.id.map);
+        webView.loadUrl("https://www.google.ca/maps/@49.2803222,-123.112195,15z");
     }
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
