@@ -16,6 +16,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,8 +37,6 @@ public class ArtDetailsActivity extends AppCompatActivity {
     private Cursor imageCursor;
     private Cursor commentCursor;
     private String artId;
-    private String address;
-    private String info;
 
 
     @Override
@@ -48,8 +47,6 @@ public class ArtDetailsActivity extends AppCompatActivity {
         //This image resourceID can be passed from previous intent.
         Intent intent = getIntent();
         artId = intent.getStringExtra("ArtId");
-        address = intent.getStringExtra("Address");
-        info = intent.getStringExtra("Description");
 
 //        final Drawable ic_pluscircle = new IconicsDrawable(this)
 //                .icon(FontAwesome.Icon.faw_plus_circle)
@@ -72,8 +69,12 @@ public class ArtDetailsActivity extends AppCompatActivity {
 
     public void openMap(View view) {
         WebView webView = (WebView) findViewById(R.id.map);
-        webView.loadUrl("https://www.google.ca/maps/@49.2803222,-123.112195,15z");
-
+        artCursor.moveToFirst();
+       // String stringURL = "https://www.google.ca/maps/place/@"+artCursor.getString(3)+","+artCursor.getString(2)+"z";
+        //The below is harcoded, the idea is to use google maps to take the user to the piece of art they just found :)
+        String stringURL = "https://www.google.ca/maps/place/Harry+Jerome+Sports+Centre/@49.2890585,-122.9426928,17z/data=!3m1!4b1!4m5!3m4!1s0x548679f3936b0a97:0xa3725c9fdb431a03!8m2!3d49.289055!4d-122.9405041";
+        Log.d("URL", stringURL);
+        webView.loadUrl(stringURL);
     }
 
 
@@ -100,33 +101,35 @@ public class ArtDetailsActivity extends AppCompatActivity {
     }
 
     private void updateUi() {
-        final String cheeseName;
+        final String artName;
         String masterCommentsString = "";
         while(commentCursor.moveToNext()){
             masterCommentsString = masterCommentsString.concat(commentCursor.getString(0) + "\n");
         }
+        artCursor.moveToFirst();
 
         //Retrieving the views in order to update them with Art Obj data
         //EditText commentField = (EditText) findViewById(R.id.comment);
         TextView infoText = (TextView) findViewById(R.id.infoText);
         TextView addressText = (TextView) findViewById(R.id.addressText);
 //        ImageView imageView  = (ImageView) findViewById(R.id.imageView);
-        infoText.setText(info);
-        addressText.setText(address);
+
+        infoText.setText(artCursor.getString(5));
+        addressText.setText(artCursor.getString(4));
         //In here we pass the values retrieved from previous intent and upload
         //them in this activity screen (in their respective places). Note the imgID
         //resource is a placeholder that needs to be modified.
 //        int imgId = R.drawable.alphabetball1;
 //        imageView.setImageResource(imgId);
-        artCursor.moveToFirst();
+
 //        nameField.setText(artCursor.getString(1));
 //        comments.setText(masterCommentsString);
-        cheeseName = artCursor.getString(1);
+        artName = artCursor.getString(1);
 
 
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(cheeseName);
+        collapsingToolbar.setTitle(artName);
 
         loadBackdrop();
     }
@@ -161,7 +164,18 @@ public class ArtDetailsActivity extends AppCompatActivity {
             contentResolver = getContentResolver();
             artCursor = contentResolver.query(
                     ArtDataProvider.ART_URI,
-                    new String[] {ArtDataProvider.ART_ID,ArtDataProvider.ART_NAME, ArtDataProvider.ART_COLLECTED},
+                    new String[] {  //0
+                            ArtDataProvider.ART_ID,
+                            //1
+                            ArtDataProvider.ART_NAME,
+                            //2
+                            ArtDataProvider.ART_LONGITUDE,
+                            //3
+                            ArtDataProvider.ART_LATITUDE,
+                            //4
+                            ArtDataProvider.ART_ADDRESS,
+                            //5
+                            ArtDataProvider.ART_DESCRIPTION},
                     ArtDataProvider.ART_ID + "=?",
                     new String[]{artId},
                     null,null);

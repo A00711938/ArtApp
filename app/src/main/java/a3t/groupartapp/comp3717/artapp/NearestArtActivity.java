@@ -194,7 +194,18 @@ public class NearestArtActivity extends ListFragment {
             contentResolver = getActivity().getContentResolver();
             artCursor = contentResolver.query(
                     ArtDataProvider.ART_URI,
-                    new String[] {ArtDataProvider.ART_ID,ArtDataProvider.ART_NAME,ArtDataProvider.ART_LONGITUDE,ArtDataProvider.ART_LATITUDE},
+                    new String[] {  //0
+                            ArtDataProvider.ART_ID,
+                            //1
+                            ArtDataProvider.ART_NAME,
+                            //2
+                            ArtDataProvider.ART_LONGITUDE,
+                            //3
+                            ArtDataProvider.ART_LATITUDE,
+                            //4
+                            ArtDataProvider.ART_ADDRESS,
+                            //5
+                            ArtDataProvider.ART_DESCRIPTION},
                     null,
                     null,
                     null,null);
