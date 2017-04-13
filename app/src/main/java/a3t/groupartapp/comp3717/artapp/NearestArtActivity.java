@@ -46,7 +46,7 @@ public class NearestArtActivity extends ListFragment {
 
     private String name = " ";
 
-    private Map<String,Place> myPlace = new TreeMap<String,Place>();
+    private Map<String, Place> myPlace = new TreeMap<String, Place>();
 
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -82,7 +82,7 @@ public class NearestArtActivity extends ListFragment {
     }
 
     @Override
-    public void onActivityCreated (Bundle SavedInstanceState){
+    public void onActivityCreated(Bundle SavedInstanceState) {
         super.onActivityCreated(SavedInstanceState);
 
         distance = new Location("Test Location");
@@ -107,9 +107,11 @@ public class NearestArtActivity extends ListFragment {
             public void onStatusChanged(String provider, int status, Bundle extras) {
 //                locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
             }
+
             @Override
             public void onProviderEnabled(String provider) {
             }
+
             @Override
             public void onProviderDisabled(String provider) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -121,15 +123,15 @@ public class NearestArtActivity extends ListFragment {
                 requestPermissions(new String[]{
                         Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.INTERNET
-                },10);
+                }, 10);
             }
             return;
-        }else {
+        } else {
             //configureButton();
             locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
         }
 
-        Log.d("Longitude: " , Double.toString(currLongitude));
+        Log.d("Longitude: ", Double.toString(currLongitude));
 
         //locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
     }
@@ -159,26 +161,26 @@ public class NearestArtActivity extends ListFragment {
                         Float.parseFloat(artCursor.getString(3))
                 ));
 
-       // artCursor.moveToNext();
+        // artCursor.moveToNext();
 
-       while(artCursor.moveToNext()) {
-           myPlace.put(artCursor.getString(0),
-                   new Place(artCursor.getString(1),
-                           Double.parseDouble(artCursor.getString(2)),
-                           Double.parseDouble(artCursor.getString(3))
+        while (artCursor.moveToNext()) {
+            myPlace.put(artCursor.getString(0),
+                    new Place(artCursor.getString(1),
+                            Double.parseDouble(artCursor.getString(2)),
+                            Double.parseDouble(artCursor.getString(3))
 
-                   ));
-           //Log.d("id: : " ,artCursor.getString(0));
-           //}
-       }
-       // Log.d("size: " ,Integer.toString(g));
-
-
-        for(Map.Entry m:myPlace.entrySet()){
-            String temp = (String)m.getKey();
-            Log.d("NAME", ""+m.getValue());
+                    ));
+            //Log.d("id: : " ,artCursor.getString(0));
+            //}
         }
-        Log.d("SIZE", ""+myPlace.size());
+        // Log.d("size: " ,Integer.toString(g));
+
+
+        for (Map.Entry m : myPlace.entrySet()) {
+            String temp = (String) m.getKey();
+            Log.d("NAME", "" + m.getValue());
+        }
+        Log.d("SIZE", "" + myPlace.size());
 
     }
 
@@ -194,7 +196,7 @@ public class NearestArtActivity extends ListFragment {
             contentResolver = getActivity().getContentResolver();
             artCursor = contentResolver.query(
                     ArtDataProvider.ART_URI,
-                    new String[] {  //0
+                    new String[]{  //0
                             ArtDataProvider.ART_ID,
                             //1
                             ArtDataProvider.ART_NAME,
@@ -208,7 +210,7 @@ public class NearestArtActivity extends ListFragment {
                             ArtDataProvider.ART_DESCRIPTION},
                     null,
                     null,
-                    null,null);
+                    null, null);
             /*
             imageCursor = contentResolver.query(
                     ArtDataProvider.ART_PHOTO_URI,
@@ -243,7 +245,17 @@ public class NearestArtActivity extends ListFragment {
             case 10:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     //configureButton();
-                    locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
+                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }locationManager.requestLocationUpdates("gps", 3000, 0, locationListener);
                 return;
         }
     }
@@ -314,7 +326,7 @@ public class NearestArtActivity extends ListFragment {
         test.add(name2+ "\n"+ dfmt.format(distance2) + " meters");
         test.add(name3+ "\n"+ dfmt.format(distance3) + " meters");
 
-        Log.d("SIZE", ""+test.size());
+       // Log.d("SIZE", ""+test.size());
 
 
         Activity activity = getActivity();
@@ -323,16 +335,17 @@ public class NearestArtActivity extends ListFragment {
                     R.layout.list_item, R.id.artName, test);
 
             setListAdapter(adapter);
+
+            if(distance1 <= 200) {
+                Intent i = new Intent(activity, ArtDetailsActivity.class);
+                i.putExtra("ArtId", index[0]);
+                //i.putStringArrayListExtra("comments", (ArrayList<String>)artSelection.getComment());
+                startActivity(i);
+            }
         }
         //getListView().setOnItemClickListener(this);
 
         //Triggers activity detailed page when user closer than 200 meters.
-        if(distance1 <= 200) {
-            Intent i = new Intent(getActivity(), ArtDetailsActivity.class);
-            i.putExtra("ArtId", index[0]);
-            //i.putStringArrayListExtra("comments", (ArrayList<String>)artSelection.getComment());
-            startActivity(i);
-        }
     }
 
 /*
